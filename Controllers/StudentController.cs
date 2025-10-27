@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StudentTrackerAPI.Models;
+using StudentTrackerAPI.Services;
 
 namespace StudentTrackerAPI.Controllers
 {
@@ -8,16 +8,15 @@ namespace StudentTrackerAPI.Controllers
     [Route("api/[controller]")]
     public class StudentController : ControllerBase
     {
+        private readonly StudentProcessor _processor = new StudentProcessor();
+
         [HttpPost("clock")]
         public IActionResult Clock([FromBody] StudentClockRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.FirstName))
                 return BadRequest("First name is required.");
 
-            // Normally we’d save this to a database — for now, log it.
-            Console.WriteLine($"[{DateTime.Now}] {request.FirstName} - " +
-                              $"{(request.InOut == true ? "Clocked In" : "Clocked Out")} " +
-                              $"at location: {request.Lat},{request.Lon}");
+            _processor.SaveClockRecord(request);
 
             return Ok(new
             {
