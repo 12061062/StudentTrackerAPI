@@ -11,7 +11,8 @@ dotnet run
 If successful, you should get a message similar to this:
 
 Now listening on: http://localhost:5118
-Application started. Press Ctrl+C to shut down.
+Application started.
+Press Ctrl+C to shut down.
 
 Test endpoints:
 
